@@ -1,0 +1,15 @@
+oil
+header std.io
+header std.hoist
+imm WIDTH = 400
+imm HEIGHT = 400
+host = Hoist("Hoist Window", WIDTH, HEIGHT)
+host.setfps(60)
+new main():
+    public host
+    while host.active:
+        host.wipe((0,0,0))
+
+        host.runside()
+        host.update()
+    return 1

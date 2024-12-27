@@ -1,0 +1,4 @@
+oil
+header std.io
+new main():
+    return 1
