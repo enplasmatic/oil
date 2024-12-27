@@ -1,79 +1,121 @@
 import tkinter as tk
+import execute
 from tkinter import filedialog
 
 def open_file_dialog():
-    return "script.base"
-# def open_file_dialog():
-#     root = tk.Tk()
-#     root.withdraw()  # Hide the main window
+    return "script.oil"
 
-#     file_path = filedialog.askopenfilename(
-#         title="Select a file",
-#         # filetypes=(("Text files", "*.base"), ("All files", "*.*"))
-#     )
-
-#     print("whate")
-#     root.destroy()
-#     return file_path
 
 _PURPLE = {
-    "{new}": "def",
-    "{body}": "class",
-    "{container}": "def",
-    "{domain}": "lambda",
+    "new": "def",
+    "body": "class",
+    "container": "def",
+    "domain": "lambda",
+    "object": "class",
+    "struct": "class",
+
+    f"{execute.INITMSG}": f"{execute.INITMSG}",
 }
 
 _BLUE = {
-    "{grab}": "import",
-    "{using}": "with",
-    "{void}": "pass",
-    "{attempt}": "try",
-    "{elseIf}": "elif",
-    "{if}": "if",
-    "{else}": "else",
-    "{then}": "finally",
-    "{for}": "for",
-    "{while}": "while",
-    "{serve}": "yield",
-    " << ": " in ",
-    "{and}": "and",
-    "{or}": "or",
-    "{!}": " not ",
-    "{named}": "as",
-    "{testerr}": "assert",
-    "{send}": "async",
-    "{pause}": "await",
-    "{public}": "global",
-    "{private}": "nonlocal",
-    "{return}": "return",
-    "{err}": "raise",
-    "{catch}": "except",
-    "{etr}": "from",
-    "{break}": "break",
-    "{kill}": "del",
-    "{skip}": "continue",
-    "{type}": "type",
-    "{lookup}": "match",
-    "{search}": "case",
-    "{otherwise}": "case _",
+    "grab": "import",
+    "using": "with",
+    "void": "pass",
+    "attempt": "try",
+    "eif": "elif",
+    "if": "if",
+    "else": "else",
+    "then": "finally",
+    "this": "self",
+    "for": "for",
+    "while": "while",
+    "serve": "yield",
+    "<<": "in",
+    "and": "and",
+    "or": "or",
+    "!!": "not",
+    "||": "or",
+    "&&": "and",
+    "ensure": "if",
+    "named": "as",
+    "testerr": "assert",
+    "send": "async",
+    "pause": "await",
+    "public": "global",
+    "private": "nonlocal",
+    "return": "return",
+    "err": "raise",
+    "pointsto": "is",
+    "catch": "except",
+    "etr": "from",
+    "break": "break",
+    "kill": "del",
+    "skip": "continue",
+    "type": "type",
+    "lookup": "match",
+    "search": "case",
+    "otherwise": "case _",
 
-    # Rename Operations
-    "<??>": "<??>",
-    "<def>": "<def>",
+    "null": "None",
+    "false": "False",
+    "true": "True",
+
+    # Other
+    "turn": "turn",
+    "header": "header",
+    "forget": "except: pass",
+    "imm": "imm",
+    "memoize": "memoize",
+
+    #Numerical
+    "++": "+=1",
+    "--": "-=1",
+    
 
     
 }
 
+import keyword
+for i in keyword.kwlist:
+    if i not in _BLUE.values() and i not in _PURPLE.values():
+        print(i)
+
+_PREPROCESSOR = {
+    # Rename and Precompile Operations
+    "<??>": "<??>",
+    "<def>": "<def>",
+    "precompile": "precompile",
+    "alias": "alias",
+    
+
+    # If / mode
+    "defined": "defined",
+    "ifpublic": "ifpublic",
+    "mode": "mode",
+    "rmode": "rmode",
+    "ifmod": "ifmod",
+    "ifnmod": "ifnmod",
+
+    "unsafe": "unsafe",
+    "safe": "safe",
+    
+    "include": "include",
+
+
+}
+
 
 _REPLACE_ONLY = {
-    "print(": "puts (",
-    "input(": "inputs (",
+
 }
 
 _STATICS = {
     "static": "__init__",
+    "@complement": "@staticmethod",
+    "@included": "@classmethod",
     "compile>>Python{to=stdterminal}": "compile>>Python{to=stdterminal}"
 }
+
 _FUNCS = {
     #I/O
 
@@ -83,18 +125,24 @@ _FUNCS = {
     #FILE OPERATIONS
     "Filei": "open",
     "Fileo": "close",
+
+    #INTEGERS AND FLOATS
     "longint": "int",
     "shortint": "int",
     "intd": "int",
+    "intx": "int",
     "longerint": "int",
     "infint": "float('inf')",
+    "bigf": "float",
+    "normf": "float",
+    "double": "double",
 
     #LOOP OPERATIONS
     "max": "max",
     "min": "min",
-    "++": "max",
-    "--": "min",
-    "+-": "clamp",
+    "+-": "max",
+    "-+": "min",
+    "clamp": "clamp",
     "from": "range",
     "r++": "reversed",
     "sort": "sorted",
@@ -103,36 +151,40 @@ _FUNCS = {
 
     #DATA OPERATIONS
     "get": "zip",
-    "array": "list",
+    "vector": "list",
     "each": "map",
     "rep": "format",
     "assign": "enumerate",
+    "unmut": "frozenset",
     
 
     #MATHEMATICAL OPERATIONS
     "|": "abs",
+    "abs": "abs",
     "summed": "sum",
     "complexJ": "complex",
     "longdiv": "divmod",
     "pow": "pow",
+    "round": "round",
     
 
     #ITERABLES
     "any": "any",
-    "every": "all",
+    "all": "all",
     "asyncit": "aiter",
     "asyncnext": "anext",
     "iterable": "iter",
-    "getNext": "next",
+    "getnext": "next",
     "erad": "filter",
 
     #TYPES
-    "Dict": "dict",
-    "Float": "float",
-    "Array": "list",
-    "Str": "str",
-    "Vector": "tuple",
-    "Ring": "set",
+    "dict": "dict",
+    "float": "float",
+    "array": "list",
+    "str": "str",
+    "group": "tuple",
+    "bool": "bool",
+    "set": "set",
     "type": "type",
 
     #BASE OPERATIONS
@@ -147,27 +199,41 @@ _FUNCS = {
     "attach": "breakpoint",
     "bytesome": "bytearray",
     "byteone": "bytes",
+    "mem": "id",
 
     #FOLDER, CLASS, AND FUNCTION OPERATIONS
     "isfn": "callable",
     "compile": "compile",
     "scope": "dir",
-    "base>>Literal": "eval",
-    "base>>py": "exec",
-    "isOf": "isinstance",
-    "subOf": "issubclass",
+    "isof": "isinstance",
+    "subof": "issubclass",
     "parent": "super",
     "encomp": "hasattr",
+    "raw": "repr",
+    "structset": "setattr",
+    "structget": "getattr",
+    "structdel": "delattr",
+
+
     
     #VARIABLE OPERATIONS
-    "base>>Globals": "globals",
-    "base>>Hash": "hash",
-    "base>>FieldAttrs": "vars",
-    "base>>Locals": "locals",
+    "PublicVars": "globals",
+    "Hashed": "hash",
+    "Variables": "vars",
+    "PrivateVars": "locals",
+    "Literal": "eval",
+    "ExecutePython": "exec",
 
-
+    #MISC
+    "blank": "object",
+    "only": "slice",
+    "complement": "staticmethod",
+    "included": "classmethod",
+    "memoryh": "memoryview",
+    "prop": "property",
 
 }
+
 
 _MODS = {
     "chop": "split",
@@ -179,34 +245,47 @@ _SIMPLES = {
     "[]'": "f'",
 }
 
+_CLASSES = {
+    "wrapper!": "wrapper!",
+    "main": "main",
+    "lock!": "lock!",
+}
+
 _IDECOLOR = [
-    "+=", "<<", "-=", "&&", " *", 
+    "+=", "<<", "-=", "&&", " *", "||", "!!",
 ]
+
 
 _ONLYBLUE = {}
 for i in _IDECOLOR:
     _ONLYBLUE[i] = i
 
 _VUNCS = _FUNCS.copy()
-for f in _VUNCS.copy():
-    _VUNCS[f+"("] = _VUNCS[f] + "("
-    del _VUNCS[f]
+# for f in _VUNCS.copy():
+#     _VUNCS[f+"("] = _VUNCS[f] + "("
+#     del _VUNCS[f]
 
 _VODS = _MODS.copy()
-for f in _VODS.copy():
-    _VODS[f+"("] = _VODS[f] + "("
-    del _VODS[f]
+# for f in _VODS.copy():
+#     _VODS[f+"("] = _VODS[f] + "("
+#     del _VODS[f]
 
 _VSTATICS = _STATICS.copy()
-for f in _VSTATICS.copy():
-    _VSTATICS[f+"("] = _VSTATICS[f] + "("
-    del _VSTATICS[f]
+# for f in _VSTATICS.copy():
+#     _VSTATICS[f+"("] = _VSTATICS[f] + "("
+#     del _VSTATICS[f]
 
-Keywords = {**_VUNCS, **_VODS, **_BLUE, **_PURPLE, **_SIMPLES, **_ONLYBLUE, **_REPLACE_ONLY, **_VSTATICS}
+FUNC_INCLUDE = ["_", "{", "}", "?", "<", ">", "|", "!", "+", "=", "-", "&", "@"]
+
+Keywords = {**_VUNCS, **_VODS, **_BLUE, **_PURPLE, **_SIMPLES, **_REPLACE_ONLY, **_VSTATICS, **_CLASSES}
 
 KeywordsInversed = {v: k for k, v in Keywords.items()}
 
-
+Clears = {}
+kk = Keywords.copy()
+for i in kk:
+    if kk[i] not in Keywords:
+        Clears[kk[i]] = "x"+kk[i]
 
 # def _PRINTL(v):
 #     print(f'{v}')
@@ -373,5 +452,4 @@ KeywordsInversed = {v: k for k, v in Keywords.items()}
 
 # # def _PRINTL(v):
 # #     print(f'{v}')
-
 
