@@ -1,3 +1,5 @@
+# from std.oil import *
+
 class Array():
     def __init__(self, array):
         self.array = array

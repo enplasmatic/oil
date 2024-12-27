@@ -1,3 +1,4 @@
+# from std.oil import *
 def ssunion(v1, v2):
     return sorted(set(v1).union(v2))
 

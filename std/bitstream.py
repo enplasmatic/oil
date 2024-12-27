@@ -1,3 +1,4 @@
+# from std.oil import *
 def xorh(a, b):
     return a ^ b
 

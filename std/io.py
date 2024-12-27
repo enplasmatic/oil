@@ -1,7 +1,17 @@
+# from std.oil import *
 import sys, inspect
+from termcolor import colored
+
+def endn():
+    return '\n'
+
+def endr():
+    return '\r\n'
 
 endl = "\n"
-endr = "\r\n"
+
+def sendmsg(message):
+    return input(message)
 
 def lin():
     try:
@@ -20,12 +30,19 @@ def getlin():
         return sys.stdout.readlines()
     except:
         return input()
-    
+
+
 def ln(content):
     sys.stdout.write(str(content))
 
 def lnf(content):
     sys.stdout.write(str(content)+"\n")
+
+def colorlnf(content, color):
+    print(colored(content, color))
+
+def colorln(content, color):
+    sys.stdout.write(colored(content, color))
 
 def lnraw(content):
     sys.stdout.write((content))
@@ -64,6 +81,16 @@ class IOScanner:
     def clear(self):
         self.terminal = []
 
+    def cint(self):
+        read = input()
+        self.terminal.append(read)
+        return list(map(int, read.split()))
+    
+    def cbool(self):
+        read = input()
+        self.terminal.append(read)
+        return list(map(bool, read.split()))
+
     def access(self, index):
         return self.terminal[index]
     
@@ -78,6 +105,3 @@ class IOScanner:
             self.lin = input
             self.ln = print
 
-class ErrScanner:
-    def __call__(self, *args, **kwds):
-        pass

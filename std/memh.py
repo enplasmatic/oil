@@ -1,3 +1,4 @@
+# from std.oil import *
 def memset(value, size, original_list = [], end_list = []):
     my_list = [value] * size
     return (original_list + my_list + end_list)
@@ -14,3 +15,4 @@ def clamp(val, minimum, maximum):
 
 def flatten(xss):
     return [x for xs in xss for x in xs]
+
